@@ -1,78 +1,95 @@
+
 var head=document.createElement("div");
-head.className="filter"
-
-         //Price
-var priceNode = document.createElement("P");
-var priceText = document.createTextNode("Price In USD"); 
-priceNode.appendChild(priceText);
-
-var priceFrom = document.createElement("input");
-priceFrom.type= "text";
-priceFrom.placeholder="Min";
-var priceTo = document.createElement("input");
-priceTo.type= "text";
-priceTo.placeholder="Max";
-
-head.appendChild(priceNode);
-head.appendChild(priceFrom);
-head.appendChild(priceTo);
+head.className="filter";
 
 
 
+// collapse
 
+var $col= $(`<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+    <h4 class="panel-title">
+    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    Filters
+</a>
+</h4>
+</div>
+<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div class="panel-body">
+    
+	</div>
+</div>
+</div>`);
+
+var ele=$col.find(".panel-body")[0];
+ele.appendChild(head);
+//
+     //form function
+
+
+function getform(name) {
+ return   $(`<form>
+ <div class="allign" class="row">
+    		<label >${name}</label>
+   		</div>
+   		<div class="row">
+  			<div class="col-xs-2">
+    			<input type="text" class="form-control min" placeholder="Min">
+    		</div>
+    		<div class="col-xs-2">
+     			<input type="text" class="form-control max" placeholder="Max">
+     		</div>
+		</div> 
+</form>`)
+}
+
+
+    // Price
+var name="Price";
+var $priceForm =getform(name);
+head.appendChild($priceForm[0]);
+const priceFrom = $priceForm.find(".min")[0];
+const priceTo = $priceForm.find(".max")[0];
 
      //Last24HourChange
 
-var percent24Node=document.createElement("P");
-var percent24Text=document.createTextNode("Last 24 Hour Change(%)");
-percent24Node.appendChild(percent24Text);
 
-var percent24From=document.createElement("input");
-percent24From.type="text";
-percent24From.placeholder="Min";
-var percent24To=document.createElement("input");
-percent24To.type="text";
-percent24To.placeholder="Max";
-
-head.appendChild(percent24Node);
-head.appendChild(percent24From);
-head.appendChild(percent24To);
+var name="Last 24 Hour Change";
+var $percent24Form =getform(name);
+head.appendChild($percent24Form[0])
+const percent24From = $percent24Form.find(".min")[0];
+const percent24To = $percent24Form.find(".max")[0];
 
    // Volume
-var volumeNode=document.createElement("P");
-var volumeText=document.createTextNode("Volume");
-volumeNode.appendChild(volumeText);
 
-var volumeFrom=document.createElement("input");
-volumeFrom.type="text";
-volumeFrom.placeholder="Min";
-var volumeTo=document.createElement("input");
-volumeTo.type="text";
-volumeTo.placeholder="Max";
-
-head.appendChild(volumeNode);
-head.appendChild(volumeFrom);
-head.appendChild(volumeTo);
+var name="Volume";
+var $volumeForm =getform(name);
+head.appendChild($volumeForm[0])
+const volumeFrom = $volumeForm.find(".min");
+const volumeTo = $volumeForm.find(".max");
 
 
 
 
 
+   //button
 var button=document.createElement("button");
 button.innerText="Search";
+button.className="btn btn-primary";
 head.appendChild(button);
 
 
 
-
+//Append with Body
 
 
 var nxt=document.getElementById("nav-main").nextElementSibling;
-nxt.parentNode.insertBefore(head,nxt);
+nxt.parentNode.insertBefore($col[0],nxt);
 
 
                         //filter function
-function filter(priceFrom,priceTo,percent24From,percent24To) {
+function filter(priceFrom,priceTo,percent24From,percent24To,volumeFrom,volumeTo) {
 
 		var arr = document.querySelectorAll("#currencies tbody tr , #currencies-all tbody tr");
 		for (var i =0; i<=arr.length;i++) {
@@ -85,27 +102,27 @@ function filter(priceFrom,priceTo,percent24From,percent24To) {
 			{
 				var percent24=perecentElem.getAttribute("data-usd");
 			}
-			if(!(isNaN(priceFrom)))
+			if(isNaN(priceFrom.value))
 			{
 				priceFrom.value="";
 			}
-			if(!(isNaN(priceTo)))
+			if(isNaN(priceTo.value))
 			{
 				priceTo.value="";
 			}
-			if(!(isNaN(percent24From)))
+			if(isNaN(percent24From.value))
 			{
 				percent24From.value="";
 			}
-			if(!(isNaN(percent24To)))
+			if(isNaN(percent24To.value))
 			{
 				percent24To.value="";
 			}
-			if(!(isNaN(volumeFrom)))
+			if(isNaN(volumeFrom.value))
 			{
 				volumeFrom.value="";
 			}
-			if(!(isNaN(volumeTo)))
+			if(isNaN(volumeTo.value))
 			{
 				volumeTo.value="";
 			}
@@ -152,5 +169,6 @@ function filter(priceFrom,priceTo,percent24From,percent24To) {
 
 		
 button.onclick = function() {
-	filter(priceFrom,priceTo,percent24From,percent24To)
+
+	filter(priceFrom,priceTo,percent24From,percent24To,volumeFrom,volumeTo)
 };

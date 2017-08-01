@@ -1,5 +1,5 @@
 {
-	"name": "Quick Stats",
+	"name": "Crypto Filter",
 	"version": "2.0",
 	"manifest_version": 2,
 	"description" : "Gives desired field results when searched by any of its attributes.",
@@ -7,7 +7,7 @@
 	"content_scripts": [
     {
       "matches": ["https://coinmarketcap.com/*"],
-      "js": ["script.js"],
+      "js": ["jquery.js","script.js"],
       "css": ["CS.css"]
     }
   ],
