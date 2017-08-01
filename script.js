@@ -59,6 +59,8 @@ head.appendChild(volumeTo);
 
 
 var button=document.createElement("button");
+button.type="button";
+button.className="btn-btn-default";
 button.innerText="Search";
 head.appendChild(button);
 
